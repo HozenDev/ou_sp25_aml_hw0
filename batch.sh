@@ -33,4 +33,4 @@
 conda activate dnn
 
 # Change this line to start an instance of your experiment
-python hw0.py --hidden 64 32 16 --epochs 500 --verbose 2 -exp 0
+python hw0.py --hidden 64 32 16 --epochs 500 -vv --exp 0
