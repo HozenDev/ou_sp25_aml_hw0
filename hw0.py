@@ -36,7 +36,7 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='relu', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='elu', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
