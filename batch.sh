@@ -24,7 +24,7 @@
 #SBATCH --job-name=hw0
 #SBATCH --mail-user=Enzo.B.Durel-1@ou.edu
 #SBATCH --mail-type=ALL
-#SBATCH --chdir=/home/cs504308/hw0
+#SBATCH --chdir=/home/cs504305/hw0
 #
 #################################################
 # Do not change this line unless you have your own python/tensorflow/keras set up
