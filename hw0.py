@@ -59,11 +59,12 @@ def execute_exp(args:argparse.ArgumentParser):
                             verbose=args.verbose>=2, callbacks=[early_stopping_cb])
         predictions = model.predict(ins)
         abs_errors = np.abs(predictions - outs)
+        mse_error = np.mean(abs_errors ** 2)
         max_error = np.max(abs_errors)
         sum_error = np.sum(abs_errors)
         count_large_errors = np.sum(abs_errors > 0.1)
         
-        wandb.log({"max_abs_error": max_error, "sum_abs_error": sum_error, "count_large_errors": count_large_errors})
+        wandb.log({"mse_error": mse_error, "max_abs_error": max_error, "sum_abs_error": sum_error, "count_large_errors": count_large_errors})
         
         with open(fname_output, "wb") as fp:
             pickle.dump({"history": history.history, "errors": abs_errors}, fp)
