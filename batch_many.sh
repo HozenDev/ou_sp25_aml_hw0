@@ -27,7 +27,7 @@
 #SBATCH --mail-user=Enzo.B.Durel-1@ou.edu
 #SBATCH --mail-type=ALL
 #SBATCH --chdir=/home/cs504305/hw0
-#SBATCH --array=0-9
+#SBATCH --array=0-2
 #
 #################################################
 # Do not change this line unless you have your own python/tensorflow/keras set up
