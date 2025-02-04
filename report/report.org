@@ -38,7 +38,7 @@
 #+LATEX: \clearpage
 #+LATEX: \pagenumbering{arabic} 
 
-** Liste des figures :noexport:
+** Liste des figures :ignore:
 
 #+begin_export latex
 \thispagestyle{empty}
@@ -63,17 +63,33 @@
 #+end_export
 
 * Report
+** Design
 
-** Learning Curves :ignore:
+\noindent _Activation function_: I choose to use the tanh activation because the range of the outputs is [-1,1].
+_Number of hidden layers_: I choose to get more hidden layer to deal with the non-linearity property but not increase their size to not increase the running time too much. I have 4 hidden layers, 32, 32, 32 and 16.
+_Learning rate_: I opt for a lrate = 0.0005, the model will learn slower but with a better chance to get the optimal solution.
+_Epochs_: Because of my learning rate is low, I opt for more epochs with a possibility of a callback that stop training if the efficiency of the neural network does not increase.
 
-Here is the curves of learning of the models.
+** Plots
+*** Learning Curves
+
+Here is the curves of learning of the models. We can see that the models follows the same improvements other the time and strongly resists to the random initialized weights.
 
 #+caption: Learning Curves of 10 models
+#+attr_latex: :width 10cm
 [[file:img/learning_curves.png]]
 
-** Error histogram :ignore:
+*** Error Histogram
 
-Here is the historgram representing the number of absolute error counted in the model prediction. The goal here is to have only absolute error less than 0.1.
+Here is the historgram representing the number of absolute error counted in the model prediction. The goal here is to have only absolute error less than 0.1. I have got the most of the errors below 0.1 but it remains some above.
 
 #+caption: Error Histogram of 10 models
+#+attr_latex: :width 10cm
 [[file:img/error_histogram.png]]
+
+*** Absolute Errors
+
+Here are the different bars for each run, corresponding respectively for a model as: the sum of the absolute errors, the maximum of the absolute errors, and the count of absolute errors greater than 0.1.
+
+#+caption: Absolute Errors per run
+[[file:img/bar_errors.png]]
