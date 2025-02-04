@@ -16,7 +16,7 @@
 # Reasonable partitions: debug_5min, debug_30min, normal
 #
 
-#SBATCH --partition=debug_5min
+#SBATCH --partition=normal
 #SBATCH --ntasks=1
 #SBATCH --mem=1G
 # The %j is translated into the job number
