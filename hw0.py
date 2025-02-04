@@ -16,7 +16,7 @@ from keras.utils import plot_model
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
-def build_model(n_inputs:int, n_hidden:list, n_output:int, activation:str='elu', lrate:float=0.001)-> Sequential:
+def build_model(n_inputs:int, n_hidden:list, n_output:int, activation:str='relu', lrate:float=0.001)-> Sequential:
     model = Sequential()
     model.add(InputLayer(shape=(n_inputs,)))
     
@@ -36,9 +36,12 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='elu')
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='relu', lrate=args.lrate)
     
-    early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000, restore_best_weights=True, min_delta=0.001, monitor='loss')
+    early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
+                                                      restore_best_weights=True,
+                                                      min_delta=0.001,
+                                                      monitor='loss')
     
     argstring = "exp_%02d_hidden_%s"%(args.exp, '_'.join([str(i) for i in args.hidden]))
     print("EXPERIMENT: %s"%argstring)
@@ -51,8 +54,9 @@ def execute_exp(args:argparse.ArgumentParser):
     wandb.init(project="hw0-deep-learning", name=argstring)
     
     if not args.nogo:
-        history = model.fit(x=ins, y=outs, epochs=args.epochs, verbose=args.verbose>=2, callbacks=[early_stopping_cb])
-        
+        history = model.fit(x=ins, y=outs,
+                            epochs=args.epochs, batch_size=args.batch_size,
+                            verbose=args.verbose>=2, callbacks=[early_stopping_cb])
         predictions = model.predict(ins)
         abs_errors = np.abs(predictions - outs)
         max_error = np.max(abs_errors)
@@ -94,6 +98,8 @@ def plot_results():
 def create_parser()->argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description='Deep Learning Experiment')
     parser.add_argument('--exp', type=int, default=0, help='Experiment number')
+    parser.add_argument('--lrate', type=float, default=0.001, help='Learning rate for the optimizer')
+    parser.add_argument('--batch_size', type=int, default=32, help='Batch size for training')
     parser.add_argument('--epochs', type=int, default=100, help='Number of training epochs')
     parser.add_argument('--hidden', nargs='+', type=int, default=[10,5], help='Hidden layer configuration')
     parser.add_argument('--nogo', action='store_true', help='Do not perform the experiment')
