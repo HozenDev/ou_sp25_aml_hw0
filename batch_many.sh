@@ -36,4 +36,4 @@
 conda activate dnn
 
 # Change this line to start an instance of your experiment
-python hw0.py --hidden 64 32 16 --epochs 500 -vv --exp $SLURM_ARRAY_TASK_ID
+python hw0.py --hidden 128 64 32 --epochs 1000 --lrate 0.0005 -vv --exp $SLURM_ARRAY_TASK_ID
