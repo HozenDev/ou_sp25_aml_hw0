@@ -16,7 +16,7 @@ from keras.utils import plot_model
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
-def build_model(n_inputs:int, n_hidden:list, n_output:int, activation:str='relu', lrate:float=0.001)-> Sequential:
+def build_model(n_inputs:int, n_hidden:list, n_output:int, activation:str='elu', lrate:float=0.001)-> Sequential:
     model = Sequential()
     model.add(InputLayer(shape=(n_inputs,)))
     
@@ -36,7 +36,7 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='relu', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='elu', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
