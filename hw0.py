@@ -16,14 +16,29 @@ from keras.utils import plot_model
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
-def build_model(n_inputs:int, n_hidden:list, n_output:int, activation:str='elu', lrate:float=0.001)-> Sequential:
+# wandb_metrics_cb = wandb.keras.WandbMetricsLogger(), then add it to callbacks
+# wandb.log({"hostname"})
+# PRINT RESULTS
+# results = {}
+# res = model.evaluate(x=ins, y=outs)
+# results["mse_error"] = res
+# results["ins"] = ins
+# results["outs"] = outs
+# wandb.log(results)
+#
+#
+#
+#
+#
+
+def build_model(n_inputs:int, n_hidden:list, n_output:int, hidden_activation:str='elu', output_activation:str='tanh', lrate:float=0.001)-> Sequential:
     model = Sequential()
     model.add(InputLayer(shape=(n_inputs,)))
     
     for i, n in enumerate(n_hidden):
-        model.add(Dense(n, use_bias=True, activation=activation, name='hidden%d'%i))
+        model.add(Dense(n, use_bias=True, activation=hidden_activation, name='hidden%d'%i))
     
-    model.add(Dense(n_output, use_bias=True, activation=activation, name='output'))
+    model.add(Dense(n_output, use_bias=True, activation=output_activation, name='output'))
     
     opt = keras.optimizers.Adam(learning_rate=lrate, amsgrad=False)
     model.compile(loss='mse', optimizer=opt)
@@ -38,7 +53,7 @@ def execute_exp(args:argparse.ArgumentParser):
 
     print("Min:", np.min(outs), "Max:", np.max(outs), "Mean:", np.mean(outs))
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='tanh', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='elu', output_activation='tanh', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
@@ -53,7 +68,7 @@ def execute_exp(args:argparse.ArgumentParser):
         print("File %s already exists."%fname_output)
         return
     
-    wandb.init(project="hw0-deep-learning", name=argstring)
+    wandb.init(project="hw0-deep-learning", name=argstring, config=vars(args))
     
     if not args.nogo:
         history = model.fit(x=ins, y=outs,

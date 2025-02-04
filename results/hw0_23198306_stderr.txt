@@ -1,0 +1,31 @@
+2025-02-04 12:50:16.449659: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-02-04 12:50:16.452655: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-02-04 12:50:16.592103: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-02-04 12:50:16.666010: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+wandb: Currently logged in as: dure0010 (dure0010-university-of-oklahoma). Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.2
+wandb: Run data is saved locally in /home/cs504305/hw0/wandb/run-20250204_125028-tomzpwyl
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run exp_08_hidden_32_32_32_16
+wandb: ⭐️ View project at https://wandb.ai/dure0010-university-of-oklahoma/hw0-deep-learning
+wandb: 🚀 View run at https://wandb.ai/dure0010-university-of-oklahoma/hw0-deep-learning/runs/tomzpwyl
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb: count_large_errors ▁
+wandb:      max_abs_error ▁
+wandb:          mse_error ▁
+wandb:      sum_abs_error ▁
+wandb: 
+wandb: Run summary:
+wandb: count_large_errors 2
+wandb:      max_abs_error 0.56904
+wandb:          mse_error 0.00046
+wandb:      sum_abs_error 5.94493
+wandb: 
+wandb: 🚀 View run exp_08_hidden_32_32_32_16 at: https://wandb.ai/dure0010-university-of-oklahoma/hw0-deep-learning/runs/tomzpwyl
+wandb: ⭐️ View project at: https://wandb.ai/dure0010-university-of-oklahoma/hw0-deep-learning
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250204_125028-tomzpwyl/logs

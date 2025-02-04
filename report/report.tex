@@ -1,4 +1,4 @@
-% Created 2025-02-04 mar. 12:08
+% Created 2025-02-04 mar. 13:02
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -133,21 +133,21 @@ framerule=0pt
 \newpage
 
 \section{Report}
-\label{sec:orgf58578d}
+\label{sec:orgf5347fc}
 \subsection{Design}
-\label{sec:org1aaadd1}
+\label{sec:org40b6519}
 
 \noindent \uline{Activation function}: I choose to use the tanh activation because the range of the outputs is [-1,1].\\[0pt]
-\uline{Number of hidden layers}: I choose to get more hidden layer but not increase their size.\\[0pt]
-\uline{Learning rate}: I opt for a lrate = 0.0005.\\[0pt]
+\uline{Number of hidden layers}: I choose to get more hidden layer to deal with the non-linearity property but not increase their size to not increase the running time too much. I have 4 hidden layers, 32, 32, 32 and 16.\\[0pt]
+\uline{Learning rate}: I opt for a lrate = 0.0005, the model will learn slower but with a better chance to get the optimal solution.\\[0pt]
 \uline{Epochs}: Because of my learning rate is low, I opt for more epochs with a possibility of a callback that stop training if the efficiency of the neural network does not increase.\\[0pt]
 
 \subsection{Plots}
-\label{sec:orgeecdf26}
+\label{sec:org8e5a18f}
 \subsubsection{Learning Curves}
-\label{sec:org3e5c61b}
+\label{sec:org2a6f1e9}
 
-Here is the curves of learning of the models.\\[0pt]
+Here is the curves of learning of the models. We can see that the models follows the same improvements other the time and strongly resists to the random initialized weights.\\[0pt]
 
 \begin{figure}[htbp]
 \centering
@@ -156,9 +156,9 @@ Here is the curves of learning of the models.\\[0pt]
 \end{figure}\\[0pt]
 
 \subsubsection{Error Histogram}
-\label{sec:org01a1550}
+\label{sec:org9225686}
 
-Here is the historgram representing the number of absolute error counted in the model prediction. The goal here is to have only absolute error less than 0.1.\\[0pt]
+Here is the historgram representing the number of absolute error counted in the model prediction. The goal here is to have only absolute error less than 0.1. I have got the most of the errors below 0.1 but it remains some above.\\[0pt]
 
 \begin{figure}[htbp]
 \centering
@@ -167,7 +167,7 @@ Here is the historgram representing the number of absolute error counted in the 
 \end{figure}\\[0pt]
 
 \subsubsection{Absolute Errors}
-\label{sec:org87025f4}
+\label{sec:orgeaa540a}
 
 Here are the different bars for each run, corresponding respectively for a model as: the sum of the absolute errors, the maximum of the absolute errors, and the count of absolute errors greater than 0.1.\\[0pt]
 
