@@ -16,7 +16,7 @@
 # Reasonable partitions: debug_5min, debug_30min, normal
 #
 
-#SBATCH --partition=normal
+#SBATCH --partition=disc_dual_a100_students
 #SBATCH --ntasks=1
 #SBATCH --mem=1G
 # The %j is translated into the job number
@@ -36,4 +36,4 @@
 conda activate dnn
 
 # Change this line to start an instance of your experiment
-python hw0.py --hidden 32 32 16 --epochs 1000 --lrate 0.0008 -vv --exp $SLURM_ARRAY_TASK_ID
+python hw0.py --hidden 32 32 16 --epochs 1000 --lrate 0.0005 -vv --exp $SLURM_ARRAY_TASK_ID
