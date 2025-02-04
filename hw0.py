@@ -35,6 +35,8 @@ def execute_exp(args:argparse.ArgumentParser):
         dictionary = pickle.load(fp)
     ins = dictionary["ins"]
     outs = dictionary["outs"]
+
+    print("Min:", np.min(outs), "Max:", np.max(outs), "Mean:", np.mean(outs))
     
     model = build_model(ins.shape[1], args.hidden, outs.shape[1], activation='elu', lrate=args.lrate)
     
