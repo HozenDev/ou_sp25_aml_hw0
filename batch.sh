@@ -33,4 +33,4 @@
 conda activate dnn
 
 # Change this line to start an instance of your experiment
-python hw0.py --hidden 128 64 32 16 --epochs 1000 --lrate 0.0005 --batch_size 64 -vv --exp 0
+python hw0.py --hidden 128 64 32 --epochs 1000 --lrate 0.0005 -vv --exp 0
