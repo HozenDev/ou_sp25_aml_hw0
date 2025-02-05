@@ -57,7 +57,7 @@ def execute_exp(args:argparse.ArgumentParser):
 
     X_train, X_val, y_train, y_val = train_test_split(ins, outs, test_size=0.25, random_state=42)
     
-    model = build_model(ins.shape[1], args.hidden, out.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
