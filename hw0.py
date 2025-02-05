@@ -18,21 +18,6 @@ from matplotlib import colors
 
 from sklearn.model_selection import train_test_split
 
-# wandb_metrics_cb = wandb.keras.WandbMetricsLogger(), then add it to callbacks
-# wandb.log({"hostname"})
-# PRINT RESULTS
-# results = {}
-# res = model.evaluate(x=ins, y=outs)
-# results["mse_error"] = res
-# results["ins"] = ins
-# results["outs"] = outs
-# wandb.log(results)
-#
-#
-#
-#
-#
-
 def build_model(n_inputs:int, n_hidden:list, n_output:int, hidden_activation:str='elu', output_activation:str='tanh', lrate:float=0.001)-> Sequential:
     model = Sequential()
     model.add(InputLayer(shape=(n_inputs,)))
@@ -55,7 +40,7 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
 
-    X_train, X_val, y_train, y_val = train_test_split(ins, outs, test_size=0.25, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(ins, outs, test_size=0.15, random_state=42)
     
     model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
     
@@ -78,7 +63,7 @@ def execute_exp(args:argparse.ArgumentParser):
         history = model.fit(x=X_train, y=y_train, validation_data=(X_val, y_val),
                             epochs=args.epochs, batch_size=args.batch_size,
                             verbose=args.verbose>=2, callbacks=[early_stopping_cb])
-        predictions = np.where(model.predict(X_val) > 0, 1, -1)
+        predictions = model.predict(X_val)
         # predictions = model.predict(ins)
         abs_errors = np.abs(predictions - y_val)
         mse_error = np.mean(abs_errors ** 2)
