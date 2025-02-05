@@ -16,6 +16,8 @@ from keras.utils import plot_model
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
+from sklearn.model_selection import train_test_split
+
 # wandb_metrics_cb = wandb.keras.WandbMetricsLogger(), then add it to callbacks
 # wandb.log({"hostname"})
 # PRINT RESULTS
@@ -37,7 +39,9 @@ def build_model(n_inputs:int, n_hidden:list, n_output:int, hidden_activation:str
     
     for i, n in enumerate(n_hidden):
         model.add(Dense(n, use_bias=True, activation=hidden_activation, name='hidden%d'%i))
-    
+
+    model.add(Dropout(0.2))
+        
     model.add(Dense(n_output, use_bias=True, activation=output_activation, name='output'))
     
     opt = keras.optimizers.Adam(learning_rate=lrate, amsgrad=False)
@@ -51,9 +55,9 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
 
-    print("Min:", np.min(outs), "Max:", np.max(outs), "Mean:", np.mean(outs))
+    X_train, X_val, y_train, y_val = train_test_split(ins, outs, test_size=0.25, random_state=42)
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, out.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
@@ -71,12 +75,12 @@ def execute_exp(args:argparse.ArgumentParser):
     wandb.init(project="hw0-deep-learning", name=argstring, config=vars(args))
     
     if not args.nogo:
-        history = model.fit(x=ins, y=outs,
+        history = model.fit(x=X_train, y=y_train, validation_data=(X_val, y_val),
                             epochs=args.epochs, batch_size=args.batch_size,
                             verbose=args.verbose>=2, callbacks=[early_stopping_cb])
-        predictions = np.where(model.predict(ins) > 0, 1, -1)
+        predictions = np.where(model.predict(X_val) > 0, 1, -1)
         # predictions = model.predict(ins)
-        abs_errors = np.abs(predictions - outs)
+        abs_errors = np.abs(predictions - y_val)
         mse_error = np.mean(abs_errors ** 2)
         max_error = np.max(abs_errors)
         sum_error = np.sum(abs_errors)
