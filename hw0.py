@@ -40,8 +40,6 @@ def execute_exp(args:argparse.ArgumentParser):
     ins = dictionary["ins"]
     outs = dictionary["outs"]
 
-    X_train, X_val, y_train, y_val = train_test_split(ins, outs, test_size=0.15, random_state=42)
-    
     model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
@@ -60,12 +58,12 @@ def execute_exp(args:argparse.ArgumentParser):
     wandb.init(project="hw0-deep-learning", name=argstring, config=vars(args))
     
     if not args.nogo:
-        history = model.fit(x=X_train, y=y_train, validation_data=(X_val, y_val),
+        history = model.fit(x=ins, y=outs,
                             epochs=args.epochs, batch_size=args.batch_size,
                             verbose=args.verbose>=2, callbacks=[early_stopping_cb])
-        predictions = model.predict(X_val)
+        predictions = model.predict(ins)
         # predictions = model.predict(ins)
-        abs_errors = np.abs(predictions - y_val)
+        abs_errors = np.abs(predictions - outs)
         mse_error = np.mean(abs_errors ** 2)
         max_error = np.max(abs_errors)
         sum_error = np.sum(abs_errors)
