@@ -26,7 +26,7 @@ def build_model(n_inputs:int, n_hidden:list, n_output:int, hidden_activation:str
         model.add(Dense(n, use_bias=True, activation=hidden_activation, name='hidden%d'%i))
 
     model.add(Dropout(0.2))
-        
+
     model.add(Dense(n_output, use_bias=True, activation=output_activation, name='output'))
     
     opt = keras.optimizers.Adam(learning_rate=lrate, amsgrad=False)
