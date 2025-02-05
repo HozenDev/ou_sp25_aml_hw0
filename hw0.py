@@ -53,7 +53,7 @@ def execute_exp(args:argparse.ArgumentParser):
 
     print("Min:", np.min(outs), "Max:", np.max(outs), "Mean:", np.mean(outs))
     
-    model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='elu', output_activation='tanh', lrate=args.lrate)
+    model = build_model(ins.shape[1], args.hidden, outs.shape[1], hidden_activation='tanh', output_activation='tanh', lrate=args.lrate)
     
     early_stopping_cb = keras.callbacks.EarlyStopping(patience=1000,
                                                       restore_best_weights=True,
@@ -74,7 +74,8 @@ def execute_exp(args:argparse.ArgumentParser):
         history = model.fit(x=ins, y=outs,
                             epochs=args.epochs, batch_size=args.batch_size,
                             verbose=args.verbose>=2, callbacks=[early_stopping_cb])
-        predictions = model.predict(ins)
+        predictions = np.where(model.predict(ins) > 0, 1, -1)
+        # predictions = model.predict(ins)
         abs_errors = np.abs(predictions - outs)
         mse_error = np.mean(abs_errors ** 2)
         max_error = np.max(abs_errors)
